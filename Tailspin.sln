@@ -1,0 +1,134 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependecies", "Dependecies", "{7911FD0C-5FF6-4FA9-93EB-45156AC65C3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B7122D78-30B8-42EB-BD11-4421933A63F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{137CB6FF-8B0A-4060-9EAD-07C530E6F9BC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\nuget.exe = .nuget\nuget.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41E2703E-DB80-40EA-9D37-0AC248FC3177}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+	EndProjectSection
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Tailspin.Cloud", "Tailspin.Cloud\Tailspin.Cloud.ccproj", "{1031CB72-3B13-4226-813F-97EA7CF9B2CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web", "Tailspin.Web\Tailspin.Web.csproj", "{191946E4-4C1F-4CF4-A4AD-26C86B0E0D2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.Tests", "Tailspin.Web.Tests\Tailspin.Web.Tests.csproj", "{EB28BA43-B790-45D5-BB3C-7AF9958406C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Web.ClaimsUtillities", "..\Shared\Samples.Web.ClaimsUtillities\Samples.Web.ClaimsUtillities.csproj", "{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adatum.SimulatedIssuer.V2", "..\Shared\Adatum.SimulatedIssuer.v2\Adatum.SimulatedIssuer.V2.csproj", "{A25361B9-FDCC-445F-B620-1267BC6B0B2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.SimulatedIssuer", "..\Shared\Tailspin.SimulatedIssuer\Tailspin.SimulatedIssuer.csproj", "{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.AcceptanceTests", "Tailspin.Web.AcceptanceTests\Tailspin.Web.AcceptanceTests.csproj", "{83C40984-784A-4DDD-8E23-EB860FE953D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.Survey.Public", "Tailspin.Web.Survey.Public\Tailspin.Web.Survey.Public.csproj", "{98167766-B6DE-43EF-82DE-00ED592047EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.Survey.Public.Tests", "Tailspin.Web.Survey.Public.Tests\Tailspin.Web.Survey.Public.Tests.csproj", "{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.Survey.Shared", "Tailspin.Web.Survey.Shared\Tailspin.Web.Survey.Shared.csproj", "{A6CCDFCB-108E-4F74-8691-12434A04679C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Web.Survey.Shared.Tests", "Tailspin.Web.Survey.Shared.Tests\Tailspin.Web.Survey.Shared.Tests.csproj", "{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Workers.Surveys", "Tailspin.Workers.Surveys\Tailspin.Workers.Surveys.csproj", "{4CA3ABFD-DE77-4BFF-BAFE-84351C700E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tailspin.Workers.Surveys.Tests", "Tailspin.Workers.Surveys.Tests\Tailspin.Workers.Surveys.Tests.csproj", "{5E8459A6-A712-46B1-8B77-2D96C965EC53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrikam.SimulatedIssuer.V2", "..\Shared\Fabrikam.SimulatedIssuer.v2\Fabrikam.SimulatedIssuer.V2.csproj", "{09FF60A7-887B-4FE5-B196-8A68B0E375DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1031CB72-3B13-4226-813F-97EA7CF9B2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1031CB72-3B13-4226-813F-97EA7CF9B2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1031CB72-3B13-4226-813F-97EA7CF9B2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1031CB72-3B13-4226-813F-97EA7CF9B2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191946E4-4C1F-4CF4-A4AD-26C86B0E0D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191946E4-4C1F-4CF4-A4AD-26C86B0E0D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191946E4-4C1F-4CF4-A4AD-26C86B0E0D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191946E4-4C1F-4CF4-A4AD-26C86B0E0D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB28BA43-B790-45D5-BB3C-7AF9958406C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB28BA43-B790-45D5-BB3C-7AF9958406C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB28BA43-B790-45D5-BB3C-7AF9958406C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB28BA43-B790-45D5-BB3C-7AF9958406C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A25361B9-FDCC-445F-B620-1267BC6B0B2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A25361B9-FDCC-445F-B620-1267BC6B0B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A25361B9-FDCC-445F-B620-1267BC6B0B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A25361B9-FDCC-445F-B620-1267BC6B0B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C40984-784A-4DDD-8E23-EB860FE953D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C40984-784A-4DDD-8E23-EB860FE953D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C40984-784A-4DDD-8E23-EB860FE953D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C40984-784A-4DDD-8E23-EB860FE953D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98167766-B6DE-43EF-82DE-00ED592047EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98167766-B6DE-43EF-82DE-00ED592047EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98167766-B6DE-43EF-82DE-00ED592047EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98167766-B6DE-43EF-82DE-00ED592047EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6CCDFCB-108E-4F74-8691-12434A04679C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6CCDFCB-108E-4F74-8691-12434A04679C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6CCDFCB-108E-4F74-8691-12434A04679C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6CCDFCB-108E-4F74-8691-12434A04679C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA3ABFD-DE77-4BFF-BAFE-84351C700E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA3ABFD-DE77-4BFF-BAFE-84351C700E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA3ABFD-DE77-4BFF-BAFE-84351C700E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA3ABFD-DE77-4BFF-BAFE-84351C700E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8459A6-A712-46B1-8B77-2D96C965EC53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8459A6-A712-46B1-8B77-2D96C965EC53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8459A6-A712-46B1-8B77-2D96C965EC53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8459A6-A712-46B1-8B77-2D96C965EC53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09FF60A7-887B-4FE5-B196-8A68B0E375DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09FF60A7-887B-4FE5-B196-8A68B0E375DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09FF60A7-887B-4FE5-B196-8A68B0E375DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09FF60A7-887B-4FE5-B196-8A68B0E375DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{41E2703E-DB80-40EA-9D37-0AC248FC3177} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{EB28BA43-B790-45D5-BB3C-7AF9958406C0} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB} = {7911FD0C-5FF6-4FA9-93EB-45156AC65C3A}
+		{A25361B9-FDCC-445F-B620-1267BC6B0B2C} = {7911FD0C-5FF6-4FA9-93EB-45156AC65C3A}
+		{BB00EFBA-1D37-4444-AFB9-A14CFCCFBB2B} = {7911FD0C-5FF6-4FA9-93EB-45156AC65C3A}
+		{83C40984-784A-4DDD-8E23-EB860FE953D8} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{A4B8FA2E-A89A-48F7-9EBC-64611DA536DC} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{79F7DCA9-E6D9-406F-A76F-DC31558CE8FD} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{5E8459A6-A712-46B1-8B77-2D96C965EC53} = {B7122D78-30B8-42EB-BD11-4421933A63F7}
+		{09FF60A7-887B-4FE5-B196-8A68B0E375DB} = {7911FD0C-5FF6-4FA9-93EB-45156AC65C3A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\TransientFaultHandling.Core.5.0.1118.2\lib\NET35;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.0.1118.2\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.0.1118.2\DesignTime;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.0.1208.2\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.0.1208.2\DesignTime;packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\DesignTime;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\TransientFaultHandling.Core.5.1.1209.0\lib\NET4
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Tailspin.vsmdi
+	EndGlobalSection
+EndGlobal

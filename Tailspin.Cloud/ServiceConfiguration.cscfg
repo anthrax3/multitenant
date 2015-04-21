@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Tailspin.Cloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" schemaVersion="2014-06.2.4">
+  <Role name="Tailspin.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="PublicSurveyWebsiteUrl" value="http://127.0.0.1:81" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="30" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="TraceEventTypeFilter" value="Information" />
+      <Setting name="EnableCaching" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="localhost" thumbprint="DF476DB61A8A52D4AAEF5037406FB9D073F14B7F" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="Tailspin.Web.Survey.Public">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="TraceEventTypeFilter" value="Information" />
+      <Setting name="EnableCaching" value="true" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="Tailspin.Workers.Surveys">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="TraceEventTypeFilter" value="Information" />
+      <Setting name="EnableCaching" value="true" />
+      <Setting name="PremiumBatchProcessingSize" value="32" />
+      <Setting name="StandardBatchProcessingSize" value="8" />
+      <Setting name="SummaryUpdatePollingInterval" value="10" />
+      <Setting name="ExportRequestPollingInterval" value="10" />
+      <Setting name="MaxBatchIterationsPerCycle" value="4" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
