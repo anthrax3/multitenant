@@ -23,10 +23,11 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
     using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.WindowsAzure.Storage.Blob.Protocol;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System.Security.Cryptography;
 
     public abstract class AzureBlobContainer<T> : AzureStorageWithRetryPolicy, IAzureBlobContainer<T>
     {
-        protected const int BlobRequestTimeout = 120;
+        protected const int BlobRequestTimeout = 60;//hieu: change from 120 to 60
 
         protected readonly CloudBlobContainer Container;
         protected readonly CloudStorageAccount Account;
@@ -61,13 +62,13 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
 
         public bool AcquireLock(PessimisticConcurrencyContext lockContext)
         {
-            CloudBlobClient client = this.Account.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(this.Container.Name);
-            CloudBlockBlob blob = container.GetBlockBlobReference(lockContext.ObjectId);
+            //CloudBlobClient client = this.Account.CreateCloudBlobClient();
+            //CloudBlobContainer container = client.GetContainerReference(this.Container.Name);
+            CloudBlockBlob blob = this.Container.GetBlockBlobReference(lockContext.ObjectId);
 
             //CloudBlockBlob blob = this.Container.GetBlockBlobReference(lockContext.ObjectId);
             TimeSpan? leaseTime = TimeSpan.FromSeconds(BlobRequestTimeout);//Acquire a 15 second lease on the blob. Leave it null for infinite lease. Otherwise it should be between 15 and 60 seconds.
-            string proposedLeaseId = Guid.NewGuid().ToString(); //null;//proposed lease id (leave it null for storage service to return you one).
+            //string proposedLeaseId =  Guid.NewGuid().ToString(); //null;//proposed lease id (leave it null for storage service to return you one).
 
             /*
             //var request = BlobRequest.Lease(this.GetUri(lockContext.ObjectId), BlobRequestTimeout, LeaseAction.Acquire, null);
@@ -79,7 +80,7 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             */
             try
             {
-                lockContext.LockId = blob.AcquireLease(leaseTime, proposedLeaseId);
+                lockContext.LockId = blob.AcquireLease(leaseTime, null);
                 return true;
                 /*
                    //using (var response = request.GetResponse())
@@ -97,26 +98,26 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
                 //}
                  */
             }
-            catch (WebException e)
+            catch (StorageException e)
             {
                 TraceHelper.TraceWarning("Warning acquiring blob '{0}' lease: {1}", lockContext.ObjectId, e.Message);
-                if (WebExceptionStatus.ProtocolError.Equals(e.Status))
+                var requestInformation = e.RequestInformation;
+                //var errorCode = requestInformation.ExtendedErrorInformation.ErrorCode;//errorCode = ContainerAlreadyExists
+                var statusCode = (System.Net.HttpStatusCode)requestInformation.HttpStatusCode;//request
+                if (statusCode == HttpStatusCode.NotFound)
                 {
-                    if (e.Response is HttpWebResponse)
-                    {
-                        if (HttpStatusCode.NotFound.Equals((e.Response as HttpWebResponse).StatusCode))
-                        {
-                            lockContext.LockId = null;
-                            return true;
-                        }
-                        else if (HttpStatusCode.Conflict.Equals((e.Response as HttpWebResponse).StatusCode))
-                        {
-                            lockContext.LockId = null;
-                            return false;
-                        }
-                    }
-                    throw;
+                    lockContext.LockId = null;
+                    return true;
+                    //TraceHelper.TraceWarning(ex.TraceInformation());
+                    
                 }
+                else if (HttpStatusCode.Conflict.Equals(statusCode))
+                {
+                    lockContext.LockId = null;
+                    return false;
+                }
+
+                TraceHelper.TraceError(e.TraceInformation());
                 return false;
             }
             catch (Exception e)
@@ -132,8 +133,9 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             {
                 throw new ArgumentNullException("lockContext.LockId", "LockId cannot be null or empty");
             }
-            CloudBlockBlob blob = this.Container.GetBlockBlobReference(lockContext.ObjectId);
-            blob.ReleaseLease(AccessCondition.GenerateEmptyCondition());            
+            CloudBlockBlob blob = this.Container.GetBlockBlobReference(lockContext.ObjectId);//here
+            var accessCondition = AccessCondition.GenerateLeaseCondition(lockContext.LockId);
+            blob.ReleaseLease(accessCondition);
             /*
             //var request = BlobRequest.Lease(this.GetUri(lockContext.ObjectId), BlobRequestTimeout, LeaseAction.Release, lockContext.LockId);
             //this.Account.Credentials.SignRequest(request);
@@ -282,25 +284,47 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             //    AccessCondition = (context as OptimisticConcurrencyContext).AccessCondition
             //};
 
-            this.WriteOject(blob, null, obj);
+            this.WriteOject(blob, null, (context as OptimisticConcurrencyContext).AccessCondition, obj);
         }
 
         protected virtual void PessimisticControlContextWriteStrategy(IConcurrencyControlContext context, T obj)
         {
-            if (string.IsNullOrWhiteSpace((context as PessimisticConcurrencyContext).LockId))
+            
+            string lockId = (context as PessimisticConcurrencyContext).LockId;
+            string objId = (context as PessimisticConcurrencyContext).ObjectId;
+            if (string.IsNullOrWhiteSpace(lockId))
             {
                 throw new ArgumentNullException("context.LockId", "LockId cannot be null or empty");
             }
 
-            var blobProperties = new BlobProperties();
+            CloudBlockBlob blob = this.Container.GetBlockBlobReference(objId);
+            var accessCondition = AccessCondition.GenerateLeaseCondition(lockId);
+            this.WriteOject(blob, null, accessCondition, obj);
+          /*
+            using (MemoryStream memoryStream = new MemoryStream(binarizedObject))
+            {
+                //blob.FetchAttributes();
+                //if (blob.Properties.LeaseStatus == LeaseStatus.Locked)
+                //{
+                //    blob.BreakLease(new TimeSpan(0, 0, 1));
+                //    blob.DeleteIfExists(DeleteSnapshotsOption.None);
+                //}
+                //string blockHash = GetMD5HashFromStream(memoryStream);
+                //string blockId = Convert.ToBase64String(System.BitConverter.GetBytes(lockId));
+                //string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
 
-            var binarizedObject = this.BinarizeObjectForStreaming(blobProperties, obj);
-
-            CloudBlockBlob blob = this.Container.GetBlockBlobReference(context.ObjectId);
-
-            MemoryStream memoryBuffer = new MemoryStream();
-            blob.PutBlock(context.ObjectId, memoryBuffer, null);
-
+                string blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(lockId));
+                
+                blob.PutBlock(blockId, memoryStream, null, accessCondition);
+                //using (var writer = new BinaryWriter(memoryStream, Encoding.Default))
+                //{
+                //    writer.Write(binarizedObject);
+                //}
+            }
+           * */
+            //MemoryStream memoryBuffer = new MemoryStream();
+            //blob.PutBlock(context.ObjectId, new MemoryStream(binarizedObject,true), null);
+            
             //hieu
             //var updateRequest = BlobRequest.Put(
             //    this.GetUri(context.ObjectId),
@@ -310,10 +334,7 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             //    (context as PessimisticConcurrencyContext).LockId,
             //    0);
 
-            using (var writer = new BinaryWriter(memoryBuffer, Encoding.Default))
-            {
-                writer.Write(binarizedObject);
-            }
+           
             //hieu
             //this.Account.Credentials.SignRequest(updateRequest);
 
@@ -330,8 +351,16 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
 
         protected abstract T ReadObject(CloudBlockBlob blob);
 
-        protected abstract void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, T obj);
+        protected abstract void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, T obj);
 
         protected abstract byte[] BinarizeObjectForStreaming(BlobProperties properties, T obj);
+        //private static string GetMD5HashFromStream(Stream stream)
+        //{
+        //    using (MD5 md5 = MD5.Create())
+        //    {
+        //        byte[] hash = md5.ComputeHash(stream);
+        //        return Convert.ToBase64String(hash);
+        //    }
+        //}
     }
 }

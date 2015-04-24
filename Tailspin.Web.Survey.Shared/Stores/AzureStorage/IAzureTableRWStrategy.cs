@@ -12,11 +12,11 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
 {
     using System.Data.Services.Client;
     using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    using Microsoft.WindowsAzure.Storage.Table;
 
     public interface IAzureTableRWStrategy
     {
-        void ReadEntity(TableServiceContext context, ReadingWritingEntityEventArgs args);
-        void WriteEntity(TableServiceContext context, ReadingWritingEntityEventArgs args);
+        void ReadEntity(CloudTable context, ReadingWritingEntityEventArgs args);
+        void WriteEntity(CloudTable context, ReadingWritingEntityEventArgs args);
     }
 }

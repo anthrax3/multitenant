@@ -34,13 +34,13 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             return new JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Deserialize<T>(blob.DownloadText());
         }
 
-        protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, T obj)
+        protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, T obj)
         {
             blob.Properties.ContentType = "application/json";
             
             //blob.UploadText(new JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Serialize(obj), Encoding.Default, options);
             string content = new JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Serialize(obj);
-            blob.UploadText(content, Encoding.Default,new AccessCondition(), options);
+            blob.UploadText(content, Encoding.Default, condition, options);
         }
 
         protected override byte[] BinarizeObjectForStreaming(BlobProperties properties, T obj)

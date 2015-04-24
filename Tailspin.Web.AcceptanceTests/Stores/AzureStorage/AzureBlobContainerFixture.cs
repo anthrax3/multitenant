@@ -309,9 +309,9 @@ namespace Tailspin.Web.AcceptanceTests.Stores.AzureStorage
                 return new JavaScriptSerializer().Deserialize<string>(blob.DownloadText());
             }
 
-            protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, string obj) //hieu
+            protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, string obj) //hieu
             {
-                blob.UploadText(new JavaScriptSerializer().Serialize(obj), Encoding.Default, null, options);//hieu
+                blob.UploadText(new JavaScriptSerializer().Serialize(obj), Encoding.Default, condition, options, null);//hieu
             }
 
             protected override byte[] BinarizeObjectForStreaming(BlobProperties properties, string obj)

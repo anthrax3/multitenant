@@ -46,11 +46,11 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
             }
         }
 
-        protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, byte[] obj)
+        protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, byte[] obj)
         {
             blob.Properties.ContentType = this.contentType;
             //blob.UploadByteArray(obj, options);//hieu
-            blob.UploadFromByteArray(obj, 0, obj.Length, new AccessCondition(), options);
+            blob.UploadFromByteArray(obj, 0, obj.Length, condition, options);
         }
 
         protected override byte[] BinarizeObjectForStreaming(BlobProperties properties, byte[] obj)

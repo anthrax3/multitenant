@@ -15,7 +15,8 @@ namespace Tailspin.Web.Survey.Shared.Models.Extensions
     using Microsoft.WindowsAzure.Storage;
     using Tailspin.Web.Survey.Shared.DataExtensibility;
     using Tailspin.Web.Survey.Shared.Stores.AzureStorage;
-    using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    //using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    using Microsoft.WindowsAzure.Storage.Table;
 
     public class SurveyRowRWStrategy : UDFModelRWStrategy<SurveyRow>
     {
@@ -27,7 +28,7 @@ namespace Tailspin.Web.Survey.Shared.Models.Extensions
             this.UDFDictionary = udfDictionary;
         }
 
-        public override void ReadEntity(TableServiceContext context, ReadingWritingEntityEventArgs args)
+        public override void ReadEntity(CloudTable context, ReadingWritingEntityEventArgs args)
         {
             var surveyRow = args.Entity as SurveyRow;
             if (surveyRow == null)

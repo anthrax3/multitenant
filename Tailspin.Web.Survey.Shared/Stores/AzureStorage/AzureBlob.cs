@@ -16,11 +16,14 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
     internal class AzureBlob : IListBlobItemWithName //: CloudBlob, IListBlobItemWithName
     {
        //internal AzureBlob(CloudBlob source) : base(source) { }
-        internal AzureBlob(CloudBlockBlob source)  { }
+        private CloudBlockBlob blockBlob;
+        internal AzureBlob(CloudBlockBlob source)  {
+            this.blockBlob = source;
+        }
 
         public string Name
         {
-            get { throw new System.NotImplementedException(); }
+            get { return blockBlob.Name; }
         }
 
         public CloudBlobContainer Container

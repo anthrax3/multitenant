@@ -17,7 +17,8 @@ namespace Tailspin.Web.Survey.Shared.DataExtensibility
     using Microsoft.WindowsAzure.Storage;
     using Tailspin.Web.Survey.Shared.Helpers;
     using Tailspin.Web.Survey.Shared.Stores.AzureStorage;
-    using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    //using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    using Microsoft.WindowsAzure.Storage.Table;
 
     public class UDFModelRWStrategy<T> : IAzureTableRWStrategy where T : IUDFModel
     {
@@ -26,7 +27,7 @@ namespace Tailspin.Web.Survey.Shared.DataExtensibility
 
         public UDFModelRWStrategy() { }
 
-        public virtual void ReadEntity(TableServiceContext context, ReadingWritingEntityEventArgs args)
+        public virtual void ReadEntity(CloudTable context, ReadingWritingEntityEventArgs args)
         {
             var ns = XNamespace.Get(DATASERVICESNS);
             var survey = args.Entity as IUDFModel;
@@ -55,7 +56,7 @@ namespace Tailspin.Web.Survey.Shared.DataExtensibility
             }
         }
 
-        public virtual void WriteEntity(TableServiceContext context, ReadingWritingEntityEventArgs args)
+        public virtual void WriteEntity(CloudTable context, ReadingWritingEntityEventArgs args)
         {
             var ns = XNamespace.Get(DATASERVICESNS);
             var nsmd = XNamespace.Get(DATASERVICESMETADATANS);
