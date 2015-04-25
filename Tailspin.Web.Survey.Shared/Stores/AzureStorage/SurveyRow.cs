@@ -17,7 +17,7 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
     //using Microsoft.WindowsAzure.Storage.Table.DataServices;
     using Microsoft.WindowsAzure.Storage.Table;
 
-    public class SurveyRow : TableEntity, IUDFModel //TableServiceEntity, IUDFModel hieu
+    public class SurveyRow : TableEntity, IUDFModel
     {
         public string SlugName { get; set; }
 

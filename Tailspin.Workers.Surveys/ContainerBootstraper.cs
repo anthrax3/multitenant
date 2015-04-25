@@ -44,7 +44,7 @@ namespace Tailspin.Workers.Surveys
 
             container.RegisterType<IDictionary<string, TenantSurveyProcessingInfo>, Dictionary<string, TenantSurveyProcessingInfo>>(new InjectionConstructor());
 
-            var cloudStorageAccountType = typeof(Microsoft.WindowsAzure.Storage.CloudStorageAccount);//hieu
+            var cloudStorageAccountType = typeof(Microsoft.WindowsAzure.Storage.CloudStorageAccount);
             var retryPolicyFactoryProperty = new InjectionProperty("RetryPolicyFactory", typeof(IRetryPolicyFactory));
 
             // registering IAzureTable types

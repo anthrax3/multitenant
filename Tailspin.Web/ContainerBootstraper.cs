@@ -42,7 +42,7 @@ namespace Tailspin.Web
                 ? new DefaultRetryPolicyFactory() as IRetryPolicyFactory
                 : new ConfiguredRetryPolicyFactory() as IRetryPolicyFactory);
 
-            var cloudStorageAccountType = typeof(Microsoft.WindowsAzure.Storage.CloudStorageAccount);//hieu
+            var cloudStorageAccountType = typeof(Microsoft.WindowsAzure.Storage.CloudStorageAccount);
             var retryPolicyFactoryProperty = new InjectionProperty("RetryPolicyFactory", typeof(IRetryPolicyFactory));
 
             // registering Data Extensibility stuff

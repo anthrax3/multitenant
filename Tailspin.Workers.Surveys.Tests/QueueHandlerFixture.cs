@@ -12,7 +12,6 @@ namespace Tailspin.Workers.Surveys.Tests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    //using Microsoft.WindowsAzure.StorageClient;
     using Microsoft.WindowsAzure.Storage;
     using Moq;
     using Tailspin.Workers.Surveys.Commands;
@@ -85,33 +84,33 @@ namespace Tailspin.Workers.Surveys.Tests
 
         [TestMethod]
         public void DoDeletesMessageWhenRunIsNotSuccessfullAndMessageHasBeenDequeuedMoreThanFiveTimes()
-        {
-            //hieu: fix later
-            //var message = new MessageStub();
-            //message.SetMessageReference(new CloudQueueMessageStub(string.Empty));
-            //var mockQueue = new Mock<IAzureQueue<MessageStub>>();
-            //mockQueue.Setup(q => q.GetMessages(1)).Returns(() => new[] { message });
-            //var command = new Mock<ICommand<MessageStub>>();
-            //command.Setup(c => c.Run(It.IsAny<MessageStub>())).Throws(new Exception("This will cause the command to fail"));
-            //var queueHandler = new QueueHandlerStub(mockQueue.Object);
+        {  
+            var message = new MessageStub();
+            message.SetMessageReference(new CloudQueueMessageStub(string.Empty).QueueMessage);
+            var mockQueue = new Mock<IAzureQueue<MessageStub>>();
+            mockQueue.Setup(q => q.GetMessages(1)).Returns(() => new[] { message });
+            var command = new Mock<ICommand<MessageStub>>();
+            command.Setup(c => c.Run(It.IsAny<MessageStub>())).Throws(new Exception("This will cause the command to fail"));
+            var queueHandler = new QueueHandlerStub(mockQueue.Object);
 
-            //queueHandler.Do(command.Object);
-
-            //mockQueue.Verify(q => q.DeleteMessage(message));
+            queueHandler.Do(command.Object);
+            //Hieu: since DequeueCount is readonly properties, have no solution so far for dequeued more than 5 times.
+            mockQueue.Verify(q => q.DeleteMessage(message));
         }
 
         public class MessageStub : AzureQueueMessage
         {
         }
-        //hieu: fix later
-        //public class CloudQueueMessageStub : AzureQueueMessage//CloudQueueMessage
-        //{
-        //    public CloudQueueMessageStub(string content)
-        //        : base(content)
-        //    {
-        //        this.DequeueCount = 6;
-        //    }
-        //}
+       
+        public class CloudQueueMessageStub
+        {
+            public CloudQueueMessage QueueMessage { get; set; }
+            public CloudQueueMessageStub(string content)
+            {
+                this.QueueMessage = new CloudQueueMessage(content);
+                //this.QueueMessage.DequeueCount = 6;
+            }
+        }
 
         private class QueueHandlerStub : QueueHandler<MessageStub>
         {

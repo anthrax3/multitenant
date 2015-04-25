@@ -218,7 +218,7 @@ namespace Tailspin.Web.AcceptanceTests.Stores.AzureStorage
             Assert.IsNotNull(updatedRow);
         }
 
-        private class TestRow : TableEntity//hieu
+        private class TestRow : TableEntity
         {
             public string Content { get; set; }
         }

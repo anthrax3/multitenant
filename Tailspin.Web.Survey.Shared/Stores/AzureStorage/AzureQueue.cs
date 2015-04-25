@@ -44,8 +44,6 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
 
             // retry policy is handled by TFHAB
             IRetryPolicy noRetryPolicy = new NoRetry();
-            //client.RetryPolicy = Microsoft.WindowsAzure.Storage.RetryPolicies.NoRetry();//hieu
-
             this.queue = client.GetQueueReference(queueName);
         }
 

@@ -18,7 +18,7 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
     //using Microsoft.WindowsAzure.Storage.Table.DataServices;
     using Microsoft.WindowsAzure.Storage.Table;
 
-    public interface IAzureTable<T> : IAzureObjectWithRetryPolicyFactory where T : TableEntity//TableServiceEntity hieu
+    public interface IAzureTable<T> : IAzureObjectWithRetryPolicyFactory where T : TableEntity
     {
         CloudTable AzureCloudTable { get; }
         IQueryable<T> Query { get; }

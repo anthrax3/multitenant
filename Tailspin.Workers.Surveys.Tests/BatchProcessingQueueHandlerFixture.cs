@@ -18,6 +18,7 @@ namespace Tailspin.Workers.Surveys.Tests
     using Tailspin.Workers.Surveys.Commands;
     using Tailspin.Workers.Surveys.QueueHandlers;
     using Web.Survey.Shared.Stores.AzureStorage;
+    using Microsoft.WindowsAzure.Storage.Queue;
 
     [TestClass]
     public class BatchProcessingQueueHandlerFixture
@@ -123,34 +124,38 @@ namespace Tailspin.Workers.Surveys.Tests
         [TestMethod]
         public void DoDeletesMessageWhenRunIsNotSuccessfullAndMessageHasBeenDequeuedMoreThanFiveTimes()
         {
-            //hieu: fix later
-            //var message = new MessageStub();
-            //message.SetMessageReference(new CloudQueueMessageStub(string.Empty));
-            //var mockQueue = new Mock<IAzureQueue<MessageStub>>();
-            //var queue = new Queue<IEnumerable<MessageStub>>();
-            //queue.Enqueue(new[] { message });
-            //mockQueue.Setup(q => q.GetMessages(32)).Returns(() => queue.Count > 0 ? queue.Dequeue() : new MessageStub[] { });
-            //var command = new Mock<IBatchCommand<MessageStub>>();
-            //command.Setup(c => c.Run(It.IsAny<MessageStub>())).Throws(new Exception("This will cause the command to fail"));
-            //var queueHandler = new BatchProcessingQueueHandlerStub(mockQueue.Object);
+            var message = new MessageStub();
+            var cloudQueueStub = new CloudQueueMessage(string.Empty);
+            //var msgStub = new CloudQueueMessageStub(string.Empty);
+            message.SetMessageReference(cloudQueueStub);
+            var mockQueue = new Mock<IAzureQueue<MessageStub>>();
+            var queue = new Queue<IEnumerable<MessageStub>>();
+            queue.Enqueue(new[] { message });
+            mockQueue.Setup(q => q.GetMessages(32)).Returns(() => queue.Count > 0 ? queue.Dequeue() : new MessageStub[] { });
+                 
+            var command = new Mock<IBatchCommand<MessageStub>>();
+            command.Setup(c => c.Run(It.IsAny<MessageStub>())).Throws(new Exception("This will cause the command to fail"));
+            var queueHandler = new BatchProcessingQueueHandlerStub(mockQueue.Object);
 
-            //queueHandler.Do(command.Object);
-
-            //mockQueue.Verify(q => q.DeleteMessage(message));
+            queueHandler.Do(command.Object);
+            //Hieu: since DequeueCount is readonly properties, have no solution so far for dequeued more than 5 times.
+            mockQueue.Verify(q => q.DeleteMessage(message));
         }
 
         public class MessageStub : AzureQueueMessage
         {
         }
 
-        public class CloudQueueMessageStub : AzureQueueMessage //CloudQueueMessage
+        public class CloudQueueMessageStub 
         {
-            //hieu: fix later
-            //public CloudQueueMessageStub(string content)
-            //    : base(content)
-            //{
-            //    this.DequeueCount = 6;
-            //}
+            
+            public CloudQueueMessage QueueMessage{get;set;}
+           
+            public CloudQueueMessageStub(string content)
+            {
+                this.QueueMessage = new CloudQueueMessage(content);                
+                //this.QueueMessage.DequeueCount = 6;
+            }
         }
 
         private class BatchProcessingQueueHandlerStub : BatchMultipleQueueHandler<MessageStub>
@@ -162,7 +167,7 @@ namespace Tailspin.Workers.Surveys.Tests
 
             public override void Do(IBatchCommand<MessageStub> batchCommand)
             {
-                this.Cycle(batchCommand);
+                this.Cycle(batchCommand);               
             }
         }
     }

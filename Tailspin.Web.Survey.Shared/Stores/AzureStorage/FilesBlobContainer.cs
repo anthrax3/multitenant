@@ -29,7 +29,7 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
         {
             this.StorageRetryPolicy.ExecuteAction(() =>
             {
-                this.Container.CreateIfNotExists();//hieu
+                this.Container.CreateIfNotExists();
                 this.Container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
             });
         }
@@ -37,7 +37,6 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
         protected override byte[] ReadObject(CloudBlockBlob blob)
         {
             blob = Container.GetBlockBlobReference(blob.Name);
-            //return blob.DownloadByteArray();//hieu
             using (var ms = new MemoryStream())
             {
                 blob.DownloadToStream(ms);
@@ -49,7 +48,6 @@ namespace Tailspin.Web.Survey.Shared.Stores.AzureStorage
         protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, byte[] obj)
         {
             blob.Properties.ContentType = this.contentType;
-            //blob.UploadByteArray(obj, options);//hieu
             blob.UploadFromByteArray(obj, 0, obj.Length, condition, options);
         }
 

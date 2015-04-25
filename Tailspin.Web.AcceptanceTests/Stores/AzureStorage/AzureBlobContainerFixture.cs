@@ -275,7 +275,7 @@ namespace Tailspin.Web.AcceptanceTests.Stores.AzureStorage
         }
 
         [TestMethod]
-        [ExpectedException(typeof(StorageException))]//hieu
+        [ExpectedException(typeof(StorageException))]
         public void OptimisticCannotWriteSameBlobTwice()
         {
             var azureBlobContainer = new EntitiesBlobContainer<string>(
@@ -304,14 +304,14 @@ namespace Tailspin.Web.AcceptanceTests.Stores.AzureStorage
         {
             public TestAzureBlobContainer(CloudStorageAccount account, string containerName) : base(account, containerName) { }
 
-            protected override string ReadObject(CloudBlockBlob blob)//hieu
+            protected override string ReadObject(CloudBlockBlob blob)
             {
                 return new JavaScriptSerializer().Deserialize<string>(blob.DownloadText());
             }
 
-            protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, string obj) //hieu
+            protected override void WriteOject(CloudBlockBlob blob, BlobRequestOptions options, AccessCondition condition, string obj) 
             {
-                blob.UploadText(new JavaScriptSerializer().Serialize(obj), Encoding.Default, condition, options, null);//hieu
+                blob.UploadText(new JavaScriptSerializer().Serialize(obj), Encoding.Default, condition, options, null);
             }
 
             protected override byte[] BinarizeObjectForStreaming(BlobProperties properties, string obj)
