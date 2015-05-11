@@ -29,7 +29,7 @@
     <ConfigurationSettings>
       <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="TraceEventTypeFilter" value="Information" />
-      <Setting name="EnableCaching" value="true" />
+      <Setting name="EnableCaching" value="True" />
       <Setting name="PremiumBatchProcessingSize" value="32" />
       <Setting name="StandardBatchProcessingSize" value="8" />
       <Setting name="SummaryUpdatePollingInterval" value="10" />
